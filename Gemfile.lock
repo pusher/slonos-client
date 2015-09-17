@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/mdpye/sonos-ruby.git
-  revision: 4c0b97114c8649dede27e66ebed46066c9548eb1
+  revision: 23caef6451d00fac5ba3c41b661c5952d6f466ab
   specs:
     sonos (0.3.6)
       httpclient
@@ -55,4 +55,4 @@ DEPENDENCIES
   sonos!
 
 BUNDLED WITH
-   1.10.3
+   1.10.6

@@ -67,7 +67,12 @@ end
 
 chan.bind('add') do |data|
   decoded = JSON.parse(data) ## TODO validate this worked!
-  speaker.add_spotify_to_queue({ :id => decoded['id'] + '?sid=9&amp;flags=0', :title => decoded['title'] }) # No idea why we need that string, but otherwise we get a 800 response from Sonos
+  speaker.add_spotify_to_queue(
+    {
+      :id => decoded['id'] + '?sid=9&amp;flags=0', # No idea why we need that string, but otherwise we get a 800 response from Sonos
+      :parent => "spotify%3aalbum%3a#{decoded['parent']}"
+    }
+  )
   if speaker.queue[:items].length == 1 # added the first song, play!
     speaker.play
   end
