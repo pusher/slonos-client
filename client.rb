@@ -13,20 +13,22 @@ end
 speaker = system.speakers.first
 p speaker
 
-http = Excon.new('https://slonos.herokuapp.com')
+excon = Excon.new('https://slonos.herokuapp.com')
 
-# def send_data(data)
-#   http.post(
-#     :headers => { "Content-Type" => "application-json" },
-#     :body => JSON.generate(data),
-#   )
-# end
+def send_data(excon, text)
+  excon.post(
+    :path => '/say',
+    :body => URI.encode_www_form(:text => text, :client_token => CLIENT_TOKEN),
+    :headers => { "Content-Type" => "application/x-www-form-urlencoded" }
+  )
+  # TODO error if not 200
+end
 
 APP_KEY = ENV['PUSHER_KEY']
 CLIENT_TOKEN = ENV['CLIENT_TOKEN']
 
 auth_method = lambda do |socket_id, channel|
-  response = http.post({
+  response = excon.post({
     :path => '/pusher_auth',
     :body => URI.encode_www_form(:socket_id => socket_id, :channel => channel.name, :client_token => CLIENT_TOKEN),
     :headers => { "Content-Type" => "application/x-www-form-urlencoded" }
@@ -100,18 +102,17 @@ end
 
 chan.bind('now-playing') do
   track = speaker.now_playing
-  track.delete_if {|key, _| ![:title, :artist].include?(key) }
-  p track
-  # send_data(queue[..10])
+  text = "#{track[:artist]} - #{track[:title]}"
+  send_data(excon, text)
 end
 
 chan.bind('queue') do
   queue = speaker.queue[:items]
-  queue.map do |track|
-    track.delete_if {|key, _| ![:queue_id, :title, :artist].include?(key) }
+  text = ''
+  queue.each do |track|
+    text += "#{track[:artist]} - #{track[:title]}\n"
   end
-  p queue
-  # send_data(queue[..10])
+  send_data(excon, text)
 end
 
 pusher.connect
