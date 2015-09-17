@@ -112,8 +112,8 @@ chan.bind('queue') do
   to_play = queue[track[:queue_position].to_i - 1 .. queue.length]
 
   text = ''
-  to_play.each do |t, i|
-    text += "#{t[:artist]} - #{t[:title]}\n"
+  to_play.each_with_index do |t, i|
+    text += "#{t[:artist]} - #{t[:title]}"
     if i == 0
       text += ' :notes:'
     end

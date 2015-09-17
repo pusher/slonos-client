@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/mdpye/sonos-ruby.git
-  revision: 23caef6451d00fac5ba3c41b661c5952d6f466ab
+  revision: 33cc0dd01fa144db5b8a0dcdfa3ffc0f5e6a7a3e
   specs:
     sonos (0.3.6)
       httpclient
@@ -16,18 +16,18 @@ GEM
       gyoku (>= 0.4.0)
       nokogiri
     builder (3.2.2)
-    excon (0.43.0)
+    excon (0.45.4)
     gyoku (1.3.1)
       builder (>= 2.1.2)
     httpclient (2.6.0.1)
     httpi (2.4.1)
       rack
-    json (1.8.1)
+    json (1.8.3)
     mini_portile (0.6.2)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     nori (2.6.0)
-    pusher-client (0.6.0)
+    pusher-client (0.6.2)
       json
       websocket (~> 1.0)
     rack (1.6.4)
@@ -44,7 +44,7 @@ GEM
     wasabi (3.5.0)
       httpi (~> 2.0)
       nokogiri (>= 1.4.2)
-    websocket (1.2.1)
+    websocket (1.2.2)
 
 PLATFORMS
   ruby
