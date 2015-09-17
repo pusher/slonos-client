@@ -102,15 +102,22 @@ end
 
 chan.bind('now-playing') do
   track = speaker.now_playing
-  text = "#{track[:artist]} - #{track[:title]}"
+  text = "#{track[:artist]} - #{track[:title]} :notes:"
   send_data(excon, text)
 end
 
 chan.bind('queue') do
   queue = speaker.queue[:items]
+  track = speaker.now_playing
+  to_play = queue[track[:queue_position].to_i - 1 .. queue.length]
+
   text = ''
-  queue.each do |track|
-    text += "#{track[:artist]} - #{track[:title]}\n"
+  to_play.each do |t, i|
+    text += "#{t[:artist]} - #{t[:title]}\n"
+    if i == 0
+      text += ' :notes:'
+    end
+    text += "\n"
   end
   send_data(excon, text)
 end
