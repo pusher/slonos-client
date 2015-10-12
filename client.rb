@@ -107,9 +107,8 @@ chan.bind('now-playing') do
 end
 
 chan.bind('queue') do
-  queue = speaker.queue[:items]
   track = speaker.now_playing
-  to_play = queue[track[:queue_position].to_i - 1 .. queue.length]
+  to_play = speaker.queue(track[:queue_position].to_i - 1)[:items]
 
   text = ''
   to_play.each_with_index do |t, i|
